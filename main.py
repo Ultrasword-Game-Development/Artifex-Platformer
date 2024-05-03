@@ -11,62 +11,84 @@ import pygame as pg
 
 import time
 
+pg.init()
+
+# -------------------------------- #
+dimensions = (1280, 720)
+buf_dimensions = (dimensions[0] // 2, dimensions[1] // 2)
+screen = pg.display.set_mode(dimensions, 0, 32, vsync=0)
+buffer = pg.Surface(buf_dimensions)
+
+pg.display.set_caption("Artifex")
+
+# -------------------------------- #
+
+from engine.graphics import *
+
+
+# -------------------------------- #
+
+
 FPS = 120
 
 # setup delta time
 delta = 1/FPS
 start = 0
 
-pg.init()
 
-dimensions = (1280, 720)
-buf_dimensions = (dimensions[0] // 3, dimensions[1] // 3)
-screen = pg.display.set_mode(dimensions, 0, 32, vsync=0)
-buffer = pg.Surface(buf_dimensions)
+# ----------------- #
 
-pg.display.set_caption("Artifex")
+large_font = PixelFont("assets/large_font.png")
+large_font.alter_palette(lambda c: ((255, 255, 255, 255) if c[0] == 255 else (127, 0, 0, 255)) if c[0] != 0 else (0, 0, 0, 0))
 
+small_font = PixelFont("assets/small_font.png")
+small_font.alter_palette(lambda c: ((255, 255, 255, 255) if c[0] == 255 else (127, 0, 0, 255)) if c[0] != 0 else (0, 0, 0, 0))
 
-# display fps setup
+# ----------------- #
 
-character_order = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.','-',',',':','+','\'','!','?','0','1','2','3','4','5','6','7','8','9','(',')','/','_','=','\\','[',']','*','"','<','>',';']
+v_spin_s = pg.math.Vector2(200, 100)
+v_spin = pg.math.Vector2(30, 0)
 
-def clip(surf, x, y, w, h):
-    return surf.subsurface(pg.Rect(x, y, w, h)).copy()
-
-l_font_img = pygame.image.load('assets/large_font.png')
-s_font_img = pygame.image.load('assets/small_font.png')
-
-
+# -------------------------------- #
 # setup stuff
 clock = pg.time.Clock()
 running = True
+time.sleep(0.01)
 
-
+# -------------------------------- #
 start = time.time()
 while running:
-    
+    # -------------------------------- #
     # clock update
     delta = time.time() - start
     start = time.time()
 
+    # -------------------------------- #
     # background flush
     buffer.fill((0, 0, 0))
     # print(1/delta)
 
+    # -------------------------------- #
     # draw a white square
-    pg.draw.rect(buffer, (255, 255, 255), (0, 0, 20, 20))
-    pg.draw.line(buffer, (255, 255, 255), (100, 100), (20, 30))
+    # pg.draw.rect(buffer, (255, 255, 255), (0, 0, 20, 20))
+    pg.draw.line(buffer, (255, 255, 255), v_spin_s, v_spin_s + v_spin)
+    v_spin.rotate_ip(30 * delta)
 
+    # draw the fps
+    large_font.render(buffer, str(round(1/delta)), (0, 0))
+    small_font.render(buffer, "Hello World", (100, 100))
+    # -------------------------------- #
     # update events
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
 
+    # -------------------------------- #
     # push buffer
     screen.blit(pg.transform.scale(buffer, dimensions), (0, 0))
     # update display
     pg.display.flip()
     clock.tick(FPS)
 
+# -------------------------------- #
 pg.quit()
