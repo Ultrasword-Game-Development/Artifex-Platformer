@@ -8,8 +8,8 @@ Contains the PixelFont class that takes in user defined .png font files and gene
 
 import pygame as pg
 
-from .utils import *
-
+from . import asset
+from ..utils import *
 
 class PixelFont:
     CHAR_ORDER = [
@@ -101,7 +101,7 @@ class PixelFont:
     def __init__(self, file: str):
         """Initialize the PixelFont object"""
         self.file = file
-        self.surface = pg.image.load(file).convert()
+        self.surface = asset.ImageHandler[file]
         self.surface.set_colorkey((0, 0, 0))
         self._chars = {}
 

@@ -15,7 +15,7 @@ pg.init()
 
 # -------------------------------- #
 dimensions = (1280, 720)
-buf_dimensions = (dimensions[0] // 2, dimensions[1] // 2)
+buf_dimensions = (dimensions[0] // 3, dimensions[1] // 3)
 screen = pg.display.set_mode(dimensions, 0, 32, vsync=0)
 buffer = pg.Surface(buf_dimensions)
 
@@ -24,7 +24,8 @@ pg.display.set_caption("Artifex")
 # -------------------------------- #
 
 from engine.graphics import *
-
+from engine.system import *
+from engine.utils import *
 
 # -------------------------------- #
 
@@ -49,11 +50,15 @@ small_font.alter_palette(lambda c: ((255, 255, 255, 255) if c[0] == 255 else (12
 v_spin_s = pg.math.Vector2(200, 100)
 v_spin = pg.math.Vector2(30, 0)
 
+animation = Animation("assets/entity/player-sprite.json")
+a_regist = AnimationRegistry(animation)
+
+
 # -------------------------------- #
 # setup stuff
 clock = pg.time.Clock()
 running = True
-time.sleep(0.01)
+time.sleep(0.1)
 
 # -------------------------------- #
 start = time.time()
@@ -67,6 +72,17 @@ while running:
     # background flush
     buffer.fill((0, 0, 0))
     # print(1/delta)
+
+    # for i, sprite in enumerate(animation.iterate_compressed_frames()):
+    #     buffer.blit(sprite._image, (200 + i * animation._rect.w, 100))
+
+    buffer.blit(a_regist.get_sprite("__compressed__", delta), (0, 100))
+
+    # for i, sprites in enumerate(animation.iterate_frames()):
+    #     # print(sprites)
+    #     for j, sprite in enumerate(sprites):
+    #         buffer.blit(sprite._image, (200 + i * animation._rect.w, 50 + j * animation._rect.h))
+    
 
     # -------------------------------- #
     # draw a white square

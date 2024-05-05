@@ -18,5 +18,5 @@ def palette_swap(surf, old_c, new_c):
 
 
 def clip(image, x, y, w, h):
-    """Clip a surface"""
-    return image.subsurface(pg.Rect(x, y, w, h)).convert_alpha()
+    """Clip a rect from a surface"""
+    return image.subsurface(pg.Rect(x, y, w, h)).convert_alpha().copy()
