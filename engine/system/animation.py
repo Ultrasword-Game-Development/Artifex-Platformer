@@ -180,7 +180,7 @@ class Animation:
 
         for i in range(len(self._layers[key]._frames)):
             # create empty frame + render all layers onto it in accordance to size + etc
-            surf = pg.Surface(self._rect.size, 0, 32).convert()
+            surf = pg.Surface(self._rect.size, 0, 32).convert_alpha()
             surf.fill((0, 0, 0, 0))
 
             # render all layers onto surface

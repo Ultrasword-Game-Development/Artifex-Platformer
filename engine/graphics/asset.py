@@ -25,7 +25,7 @@ class ImageHandler:
         if path in cls.LOADED:
             return cls.LOADED[path]
         else:
-            img = pg.image.load(path).convert()
+            img = pg.image.load(path).convert_alpha()
             cls.LOADED[path] = img
             return img
 

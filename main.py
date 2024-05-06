@@ -31,9 +31,11 @@ from engine.utils import *
 
 
 FPS = 120
+BG_COL = (0, 0, 0)
+# BG_COL = (255, 255, 255)
 
 # setup delta time
-delta = 1/FPS
+delta = 0
 start = 0
 
 
@@ -59,22 +61,23 @@ a_regist = AnimationRegistry(animation)
 clock = pg.time.Clock()
 running = True
 time.sleep(0.1)
+delta = 0.1
 
 # -------------------------------- #
 start = time.time()
 while running:
     # -------------------------------- #
     # clock update
-    delta = time.time() - start
+    delta = time.time() - start + 0.00001
     start = time.time()
 
     # -------------------------------- #
     # background flush
-    buffer.fill((0, 0, 0))
+    buffer.fill(BG_COL)
     # print(1/delta)
 
     # for i, sprite in enumerate(animation.iterate_compressed_frames()):
-    #     buffer.blit(sprite._image, (200 + i * animation._rect.w, 100))
+    #     buffer.blit(sprite._image, (200 + i * animation._rect.w, 20))
 
     buffer.blit(a_regist.get_sprite("__compressed__", delta), (0, 100))
 
