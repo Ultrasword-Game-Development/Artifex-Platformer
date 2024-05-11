@@ -10,6 +10,7 @@ setup(
     author='Peter Zhang',
     install_requires=[
         "pygame-ce==2.4.1",
-        "moderngl==5.10.0"
+        "moderngl==5.10.0",
+        "numba==0.59.1",
     ]
 ) 
