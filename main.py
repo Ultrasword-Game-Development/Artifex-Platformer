@@ -55,6 +55,9 @@ v_spin = pg.math.Vector2(30, 0)
 animation = Animation("assets/entity/player-sprite.json")
 a_regist = AnimationRegistry(animation)
 
+animation_run = Animation("assets/entity/player-sprite-run.json")
+a_regist_run = AnimationRegistry(animation_run)
+
 
 # -------------------------------- #
 # setup stuff
@@ -80,6 +83,7 @@ while running:
     #     buffer.blit(sprite._image, (200 + i * animation._rect.w, 20))
 
     buffer.blit(a_regist.get_sprite("__compressed__", delta), (0, 100))
+    buffer.blit(a_regist_run.get_sprite("__compressed__", delta), (100, 100))
 
     # for i, sprites in enumerate(animation.iterate_frames()):
     #     # print(sprites)

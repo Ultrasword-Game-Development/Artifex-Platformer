@@ -14,7 +14,6 @@ import pygame as pg
 # image loader
 # -------------------------------- #
 
-
 class ImageHandler:
 
     LOADED = {}
@@ -33,3 +32,5 @@ class ImageHandler:
 # -------------------------------- #
 # font handler
 # -------------------------------- #
+
+
